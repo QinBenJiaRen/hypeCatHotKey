@@ -1,0 +1,22 @@
+name: Scheduled Data Collection
+
+on:
+  schedule:
+    # 每30分钟执行一次
+    - cron: '*/30 * * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Vercel API
+        run: |
+          curl -X POST ${{ secrets.VERCEL_APP_URL }}/api/collect
+        env:
+          VERCEL_APP_URL: ${{ secrets.VERCEL_APP_URL }}
+
+      - name: Check result
+        run: echo "Data collection triggered successfully"
