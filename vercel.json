@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "name": "hypecat-hotkey",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/auth/reddit",
+      "dest": "/api/auth/reddit"
+    },
+    {
+      "src": "/auth/reddit/callback",
+      "dest": "/api/auth/reddit/callback"
+    },
+    {
+      "src": "/health",
+      "dest": "/api/health"
+    },
+    {
+      "src": "/api/collect",
+      "dest": "/api/collect"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "regions": ["sin1"],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "*/30 * * * *"
+    }
+  ]
+}

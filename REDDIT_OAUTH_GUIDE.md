@@ -98,11 +98,25 @@ node src/oauth-server.js --port 3000
 
 Reddit应用的重定向URI必须与OAuth服务器的设置完全匹配：
 
-| 环境 | 重定向URI |
-|------|-----------|
-| **本地开发** | `http://localhost:3000/auth/reddit/callback` |
-| **自定义端口** | `http://localhost:{PORT}/auth/reddit/callback` |
-| **生产环境** | `https://yourdomain.com/auth/reddit/callback` |
+| 环境 | 重定向URI | 说明 |
+|------|-----------|------|
+| **本地开发** | `http://localhost:3000/auth/reddit/callback` | 使用HTTP，端口3000 |
+| **自定义端口** | `http://localhost:{PORT}/auth/reddit/callback` | 自定义端口 |
+| **生产环境** | `https://popular.hypecat.ai/auth/reddit/callback` | 使用HTTPS，您的域名 |
+
+**⭐ 重要提示**：
+- Reddit允许配置**多个重定向URI**，建议同时添加开发和生产环境的URI
+- 生产环境**必须使用HTTPS**
+- URI必须**完全匹配**，包括协议、域名、端口、路径
+
+**Reddit应用配置示例**：
+```
+在 redirect uri 字段中添加：
+http://localhost:3000/auth/reddit/callback
+https://popular.hypecat.ai/auth/reddit/callback
+```
+
+详细的生产环境部署配置，请参考：[生产环境部署指南](PRODUCTION_DEPLOYMENT.md)
 
 ### 环境变量详解
 
@@ -216,16 +230,46 @@ OAuth授权请求以下权限：
 
 1. **更新重定向URI**:
    ```
-   https://yourdomain.com/auth/reddit/callback
+   开发环境：http://localhost:3000/auth/reddit/callback
+   生产环境：https://popular.hypecat.ai/auth/reddit/callback
    ```
 
 2. **环境变量配置**:
+   
+   **开发环境** (`.env`):
    ```env
-   REDDIT_REDIRECT_URI=https://yourdomain.com/auth/reddit/callback
-   OAUTH_SERVER_PORT=443
+   REDDIT_REDIRECT_URI=http://localhost:3000/auth/reddit/callback
+   OAUTH_SERVER_PORT=3000
+   ```
+   
+   **生产环境** (`.env.production`):
+   ```env
+   NODE_ENV=production
+   REDDIT_REDIRECT_URI=https://popular.hypecat.ai/auth/reddit/callback
+   OAUTH_SERVER_PORT=3000
    ```
 
-3. **SSL证书**: 确保HTTPS配置正确
+3. **SSL证书**: 确保HTTPS配置正确（使用Let's Encrypt或其他证书）
+
+4. **Nginx反向代理配置**:
+   ```nginx
+   server {
+       listen 443 ssl http2;
+       server_name popular.hypecat.ai;
+       
+       ssl_certificate /path/to/cert.pem;
+       ssl_certificate_key /path/to/key.pem;
+       
+       location / {
+           proxy_pass http://localhost:3000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
+   ```
+
+📘 **完整部署指南**：查看 [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) 了解详细配置步骤
 
 ### 服务器配置
 

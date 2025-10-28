@@ -69,6 +69,7 @@ web_modules/
 .env
 .env.*
 !.env.example
+!.env.vercel.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -109,6 +110,9 @@ dist
 
 # Serverless directories
 .serverless/
+
+# Vercel
+.vercel
 
 # FuseBox cache
 .fusebox/

@@ -4,10 +4,15 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/QinBenJiaRen/hypeCatHotKey)
 
 ## 📖 简介
 
 HypeCat HotKey 是一个基于 Node.js 的全球热点数据采集应用，能够从多个数据源实时获取热点信息，并将数据存储到 Supabase 数据库中。
+
+**支持两种部署方式**：
+- 🚀 **Vercel无服务器部署**（推荐） - 零配置，一键部署
+- 🖥️ **传统VPS部署** - 使用PM2 + Nginx
 
 ### 🌟 主要功能
 
@@ -15,6 +20,7 @@ HypeCat HotKey 是一个基于 Node.js 的全球热点数据采集应用，能�
 - **智能数据处理**: 自动去重、关键词提取、地区分类
 - **准实时更新**: 可配置的定时采集机制
 - **数据存储**: 集成 Supabase PostgreSQL 数据库
+- **OAuth认证**: 支持 Reddit OAuth 2.0 授权流程
 - **优雅设计**: 遵循 Node.js 开发规范，模块化架构
 
 ### 📊 数据源
@@ -26,6 +32,18 @@ HypeCat HotKey 是一个基于 Node.js 的全球热点数据采集应用，能�
 | **Google Trends** | 获取搜索趋势 | ❌ 无需认证 |
 
 ## 🚀 快速开始
+
+### 部署选择
+
+**选项 A: Vercel 部署（推荐新手）**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/QinBenJiaRen/hypeCatHotKey)
+
+点击按钮，5分钟完成部署！查看 [Vercel部署指南](./VERCEL_DEPLOYMENT.md)
+
+**选项 B: VPS/服务器部署**
+
+适合需要完全控制的用户。查看 [生产环境部署指南](./PRODUCTION_DEPLOYMENT.md)
 
 ### 环境要求
 
@@ -274,7 +292,14 @@ npm test
 - 📊 统计数据
 - 🔄 任务状态
 
-## 🚨 故障排除
+## � 相关文档
+
+- 📘 [Vercel部署指南](./VERCEL_DEPLOYMENT.md) - 无服务器部署（推荐）
+- 📗 [生产环境部署](./PRODUCTION_DEPLOYMENT.md) - VPS/服务器部署
+- 📙 [Reddit OAuth指南](./REDDIT_OAUTH_GUIDE.md) - OAuth认证配置
+- 📕 [OAuth演示说明](./OAUTH_DEMO.md) - OAuth流程演示
+
+## �🚨 故障排除
 
 ### 常见问题
 
@@ -307,7 +332,31 @@ LOG_LEVEL=debug npm start
 3. 提交更改
 4. 发起 Pull Request
 
-## 📄 许可证
+## � 生产环境部署
+
+### 域名配置 (popular.hypecat.ai)
+
+如果要将服务部署到域名 `popular.hypecat.ai`：
+
+1. **Reddit应用配置**：
+   - 重定向URI: `https://popular.hypecat.ai/auth/reddit/callback`
+   - 可同时保留开发环境URI: `http://localhost:3000/auth/reddit/callback`
+
+2. **环境变量配置**：
+   ```env
+   REDDIT_REDIRECT_URI=https://popular.hypecat.ai/auth/reddit/callback
+   OAUTH_SERVER_PORT=3000
+   NODE_ENV=production
+   ```
+
+3. **服务器配置**：
+   - 配置Nginx反向代理
+   - 安装SSL证书（Let's Encrypt）
+   - 使用PM2管理进程
+
+📘 **详细部署指南**：查看 [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) 了解完整的生产环境配置步骤
+
+## �📄 许可证
 
 本项目采用 [MIT 许可证](LICENSE)。
 
