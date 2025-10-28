@@ -334,17 +334,17 @@ LOG_LEVEL=debug npm start
 
 ## � 生产环境部署
 
-### 域名配置 (popular.hypecat.ai)
+### 域名配置示例
 
-如果要将服务部署到域名 `popular.hypecat.ai`：
+如果要将服务部署到自定义域名（如 `your-domain.com`）：
 
 1. **Reddit应用配置**：
-   - 重定向URI: `https://popular.hypecat.ai/auth/reddit/callback`
+   - 重定向URI: `https://your-domain.com/auth/reddit/callback`
    - 可同时保留开发环境URI: `http://localhost:3000/auth/reddit/callback`
 
 2. **环境变量配置**：
    ```env
-   REDDIT_REDIRECT_URI=https://popular.hypecat.ai/auth/reddit/callback
+   REDDIT_REDIRECT_URI=https://your-domain.com/auth/reddit/callback
    OAUTH_SERVER_PORT=3000
    NODE_ENV=production
    ```

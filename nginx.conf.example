@@ -1,12 +1,12 @@
-# Nginx 配置示例 - HypeCat OAuth服务
-# 将此文件复制到: /etc/nginx/sites-available/popular.hypecat.ai
-# 创建符号链接: sudo ln -s /etc/nginx/sites-available/popular.hypecat.ai /etc/nginx/sites-enabled/
+# Nginx配置示例 - HypeCat HotKey
+# 将此文件复制到: /etc/nginx/sites-available/your-domain.com
+# 创建符号链接: sudo ln -s /etc/nginx/sites-available/your-domain.com /etc/nginx/sites-enabled/
 
 # HTTP -> HTTPS 重定向
 server {
     listen 80;
     listen [::]:80;
-    server_name popular.hypecat.ai;
+    server_name your-domain.com;
 
     # Let's Encrypt验证路径
     location /.well-known/acme-challenge/ {
@@ -19,15 +19,15 @@ server {
     }
 }
 
-# HTTPS 服务器配置
+# HTTPS 服务器
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name popular.hypecat.ai;
+    server_name your-domain.com;
 
-    # SSL 证书配置 (使用 Let's Encrypt)
-    ssl_certificate /etc/letsencrypt/live/popular.hypecat.ai/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/popular.hypecat.ai/privkey.pem;
+    # SSL证书配置 (Let's Encrypt)
+    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
     
     # SSL 配置（推荐的安全设置）
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -114,7 +114,7 @@ server {
 }
 
 # 配置说明：
-# 1. 替换 popular.hypecat.ai 为您的实际域名
+# 1. 替换 your-domain.com 为您的实际域名
 # 2. 确保 SSL 证书路径正确
 # 3. 确保 Node.js 应用运行在 localhost:3000
 # 4. 测试配置: sudo nginx -t

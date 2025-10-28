@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # HypeCat HotKey 生产环境部署脚本
-# 用途：在服务器上快速部署应用到 popular.hypecat.ai
+# 用途：在服务器上快速部署应用
 # 使用方法：chmod +x deploy.sh && ./deploy.sh
 
 set -e  # 遇到错误立即退出
@@ -9,7 +9,7 @@ set -e  # 遇到错误立即退出
 echo "🚀 开始部署 HypeCat HotKey 到生产环境..."
 
 # 配置变量
-DOMAIN="popular.hypecat.ai"
+DOMAIN="your-domain.com"  # 修改为你的域名
 APP_DIR="/var/www/hypecat"
 NGINX_CONF="/etc/nginx/sites-available/$DOMAIN"
 EMAIL="your-email@example.com"  # 用于 Let's Encrypt
@@ -107,7 +107,7 @@ if [ ! -f "$NGINX_CONF" ]; then
     cp $APP_DIR/nginx.conf.example $NGINX_CONF
     
     # 替换域名
-    sed -i "s/popular.hypecat.ai/$DOMAIN/g" $NGINX_CONF
+    sed -i "s/your-domain.com/$DOMAIN/g" $NGINX_CONF
     
     # 创建符号链接
     ln -sf $NGINX_CONF /etc/nginx/sites-enabled/

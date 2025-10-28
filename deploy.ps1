@@ -14,7 +14,7 @@ Write-Host "🚀 开始部署 HypeCat HotKey..." -ForegroundColor Green
 
 # 配置变量
 $APP_DIR = "C:\inetpub\hypecat"
-$DOMAIN = "popular.hypecat.ai"
+$DOMAIN = "your-domain.com"  # 修改为你的域名
 
 # 1. 检查 Node.js
 Write-Host "`n📦 步骤 1/6: 检查 Node.js..." -ForegroundColor Green
