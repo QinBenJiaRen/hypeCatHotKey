@@ -112,7 +112,6 @@ Reddit应用的重定向URI必须与OAuth服务器的设置完全匹配：
 ```
 在 redirect uri 字段中添加：
 http://localhost:3000/auth/reddit/callback
-https://popular.hypecat.ai/auth/reddit/callback
 ```
 
 详细的生产环境部署配置，请参考：[生产环境部署指南](PRODUCTION_DEPLOYMENT.md)
